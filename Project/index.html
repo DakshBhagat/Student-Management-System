@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System | Login</title>
+    <link rel="stylesheet" href="Project.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-card">
+            <h1>🎓 SMS Portal</h1>
+            <p>Enter your credentials to access dashboard</p>
+
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="Enter Username"
+                        required
+                    >
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter Password"
+                        required
+                    >
+                </div>
+
+                <div class="options">
+                    <label>
+                        <input type="checkbox" id="showPassword">
+                        Show Password
+                    </label>
+                </div>
+
+                <button type="submit">
+                    Login
+                </button>
+            </form>
+
+            <p id="message"></p>
+            <div style="margin-top: 15px; font-size: 12px; text-align: center; color: #888;">
+                Demo Credentials: <b>admin</b> / <b>admin123</b>
+            </div>
+        </div>
+    </div>
+
+    <script src="Project.js"></script>
+</body>
+</html>

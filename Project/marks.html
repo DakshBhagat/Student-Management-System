@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marks & Grades | Student Management System</title>
+    <link rel="stylesheet" href="cssdashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            🎓 SMS
+        </div>
+        <ul>
+            <li>
+                <a href="dashboard.html">🏠 Dashboard</a>
+            </li>
+            <li>
+                <a href="students.html">👨‍🎓 Students</a>
+            </li>
+            <li>
+                <a href="attendance.html">📅 Attendance</a>
+            </li>
+            <li class="active">
+                <a href="marks.html">📚 Marks</a>
+            </li>
+            <li id="logout">
+                🚪 Logout
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+        <header>
+            <div>
+                <h1>Marks & Examination</h1>
+                <p style="color: var(--gray); font-size: 14px; margin-top: 4px;">Track student performance, grades and examination results</p>
+            </div>
+            <div class="profile">
+                <button id="themeBtn" title="Toggle Theme">🌙</button>
+                <img src="profile.jpeg" alt="Admin Avatar" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff'">
+            </div>
+        </header>
+
+        <!-- Stats Overview -->
+        <div class="cards" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 25px;">
+            <div class="card blue">
+                <h2>Highest Score</h2>
+                <h1 id="highestScore">0/100</h1>
+            </div>
+            <div class="card orange">
+                <h2>Average Marks</h2>
+                <h1 id="classAverage">0%</h1>
+            </div>
+            <div class="card green">
+                <h2>Passed Students</h2>
+                <h1 id="passedCount">0</h1>
+            </div>
+            <div class="card red">
+                <h2>Passing Rate</h2>
+                <h1 id="marksPassRate">0%</h1>
+            </div>
+        </div>
+
+        <!-- Controls Bar -->
+        <div class="controls-bar">
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" id="marksSearch" placeholder="Search student by name or ID...">
+                </div>
+                <select id="courseFilter" class="filter-select">
+                    <option value="all">All Courses</option>
+                    <option value="B.Tech AI">B.Tech AI</option>
+                    <option value="B.Tech CSE">B.Tech CSE</option>
+                    <option value="BCA">BCA</option>
+                    <option value="BBA">BBA</option>
+                </select>
+                <select id="statusFilter" class="filter-select">
+                    <option value="all">All Results</option>
+                    <option value="pass">Passed (≥ 40)</option>
+                    <option value="fail">Failed (< 40)</option>
+                    <option value="distinction">Distinction (≥ 80)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Marks Table -->
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Student Name</th>
+                        <th>Course</th>
+                        <th>Semester</th>
+                        <th>Score</th>
+                        <th>Grade</th>
+                        <th>Result</th>
+                        <th style="text-align: right;">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="marksTableBody">
+                    <!-- Dynamic Rows -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Marks Modal -->
+<div class="modal" id="marksModal">
+    <div class="modal-content" style="max-width: 400px;">
+        <div class="modal-header">
+            <h3>Update Marks</h3>
+            <button class="close-btn" id="closeMarksModal">&times;</button>
+        </div>
+        <form id="marksForm">
+            <input type="hidden" id="editMarksStudentId">
+            <div class="form-group">
+                <label>Student Name</label>
+                <input type="text" id="modalStudentName" disabled style="background: #f3f4f6; cursor: not-allowed;">
+            </div>
+            <div class="form-group">
+                <label for="newScoreInput">Marks (0 to 100)</label>
+                <input type="number" id="newScoreInput" min="0" max="100" required placeholder="Enter marks">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" id="cancelMarksModalBtn">Cancel</button>
+                <button type="submit" class="btn btn-primary btn-sm">Update Marks</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="marks.js"></script>
+</body>
+</html>

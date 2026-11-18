@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students | Student Management System</title>
+    <link rel="stylesheet" href="cssdashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">
+            🎓 SMS
+        </div>
+        <ul>
+            <li>
+                <a href="dashboard.html">🏠 Dashboard</a>
+            </li>
+            <li class="active">
+                <a href="students.html">👨‍🎓 Students</a>
+            </li>
+            <li>
+                <a href="attendance.html">📅 Attendance</a>
+            </li>
+            <li>
+                <a href="marks.html">📚 Marks</a>
+            </li>
+            <li id="logout">
+                🚪 Logout
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+        <header>
+            <div>
+                <h1>Student Directory</h1>
+                <p style="color: var(--gray); font-size: 14px; margin-top: 4px;">Manage student admissions, profiles and records</p>
+            </div>
+            <div class="profile">
+                <button id="themeBtn" title="Toggle Theme">🌙</button>
+                <img src="profile.jpeg" alt="Admin Avatar" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff'">
+            </div>
+        </header>
+
+        <!-- Stats Overview -->
+        <div class="cards" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 25px;">
+            <div class="card blue">
+                <h2>Total Enrolled</h2>
+                <h1 id="totalCount">0</h1>
+            </div>
+            <div class="card green">
+                <h2>Eligible (Attendance ≥75%)</h2>
+                <h1 id="eligibleCount">0</h1>
+            </div>
+            <div class="card orange">
+                <h2>Top Performers (Marks ≥85)</h2>
+                <h1 id="toppersCount">0</h1>
+            </div>
+        </div>
+
+        <!-- Controls Bar -->
+        <div class="controls-bar">
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                <div class="search-box">
+                    <span>🔍</span>
+                    <input type="text" id="searchInput" placeholder="Search by name, ID or course...">
+                </div>
+                <select id="courseFilter" class="filter-select">
+                    <option value="all">All Courses</option>
+                    <option value="B.Tech AI">B.Tech AI</option>
+                    <option value="B.Tech CSE">B.Tech CSE</option>
+                    <option value="BCA">BCA</option>
+                    <option value="BBA">BBA</option>
+                </select>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button id="exportBtn" class="btn btn-secondary btn-sm" style="display: flex; align-items: center; gap: 6px;">
+                    📥 Export CSV
+                </button>
+                <button id="addStudentBtn" class="btn btn-primary btn-sm" style="display: flex; align-items: center; gap: 6px;">
+                    ➕ Add Student
+                </button>
+            </div>
+        </div>
+
+        <!-- Students Table Card -->
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Student</th>
+                        <th>Course</th>
+                        <th>Semester</th>
+                        <th>Attendance</th>
+                        <th>Marks</th>
+                        <th>Status</th>
+                        <th style="text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="studentsListTable">
+                    <!-- Dynamic Rows -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Add / Edit Student Modal -->
+<div class="modal" id="studentModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle">Add New Student</h3>
+            <button class="close-btn" id="closeModal">&times;</button>
+        </div>
+        <form id="studentForm">
+            <input type="hidden" id="editIndex" value="-1">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="studentId">Student ID</label>
+                    <input type="number" id="studentId" required placeholder="e.g. 105">
+                </div>
+                <div class="form-group">
+                    <label for="studentName">Full Name</label>
+                    <input type="text" id="studentName" required placeholder="e.g. Rahul Sharma">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="studentEmail">Email Address</label>
+                <input type="email" id="studentEmail" required placeholder="e.g. rahul@college.edu">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="studentCourse">Course</label>
+                    <select id="studentCourse" required>
+                        <option value="B.Tech AI">B.Tech AI</option>
+                        <option value="B.Tech CSE">B.Tech CSE</option>
+                        <option value="BCA">BCA</option>
+                        <option value="BBA">BBA</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="studentSemester">Semester</label>
+                    <select id="studentSemester" required>
+                        <option value="1">Semester 1</option>
+                        <option value="2">Semester 2</option>
+                        <option value="3">Semester 3</option>
+                        <option value="4">Semester 4</option>
+                        <option value="5">Semester 5</option>
+                        <option value="6">Semester 6</option>
+                        <option value="7">Semester 7</option>
+                        <option value="8">Semester 8</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="studentAttendance">Attendance (%)</label>
+                    <input type="number" id="studentAttendance" min="0" max="100" required placeholder="0-100">
+                </div>
+                <div class="form-group">
+                    <label for="studentMarks">Marks (out of 100)</label>
+                    <input type="number" id="studentMarks" min="0" max="100" required placeholder="0-100">
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" id="cancelModalBtn">Cancel</button>
+                <button type="submit" class="btn btn-primary btn-sm">Save Student</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="students.js"></script>
+</body>
+</html>
